@@ -24,7 +24,6 @@ TestResults/
 
 # Credentials 
 testsettings_local.json
-settings_real.py
 
 # User-specific files
 *.suo
