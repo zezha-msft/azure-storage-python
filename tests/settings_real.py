@@ -36,7 +36,6 @@ PREMIUM_CONNECTION_STRING = ""
 # Use 'https' or 'http' protocol for sending requests, 'https' highly recommended
 PROTOCOL = "https"
 
-
 # Set to true to target the development storage emulator
 IS_EMULATED = False
 
