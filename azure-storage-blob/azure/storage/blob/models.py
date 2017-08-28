@@ -486,6 +486,48 @@ class _BlobTypes(object):
     '''Page blob type.'''
 
 
+class _BatchBlobTask:
+    '''
+        BatchBlobTask is used represent either an upload or download task.
+
+        :ivar str container_name:
+            String indicating the container to which the blob belongs.
+        :ivar str blob_name:
+            String indicating the blob's name, it is also the local file name.
+        :ivar str file_path:
+            String indicating the blob's full path.
+    '''
+
+    def __init__(self, container_name, blob_name, file_path):
+        self.container_name = container_name
+        self.blob_name = blob_name
+        self.file_path = file_path
+
+
+class BatchTaskResult:
+    '''
+            BatchTaskResult is used represent the result of either an upload task or a download.
+
+            :ivar str container_name:
+                String indicating the container to which the blob belongs.
+            :ivar str blob_name:
+                String indicating the blob's name, it is also the local file name.
+            :ivar str file_path:
+                String indicating the blob's full path.
+            :ivar bool is_success:
+                Indicate whether the operation was successful.
+            :ivar Exception exception:
+                If the operation was unsuccessful, then this exception contains the error.
+        '''
+
+    def __init__(self, container_name, blob_name, file_path, is_success, exception=None):
+        self.container_name = container_name
+        self.blob_name = blob_name
+        self.file_path = file_path
+        self.is_success = is_success
+        self.exception = exception
+
+
 class Include(object):
     '''
     Specifies the datasets to include in the blob list response.
