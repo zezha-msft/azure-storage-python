@@ -53,3 +53,6 @@ src/build
 
 # Azure deployment credentials
 *.pubxml
+
+# code coverage
+.coverage
