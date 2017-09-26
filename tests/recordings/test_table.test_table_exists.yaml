@@ -10,8 +10,8 @@ interactions:
       MaxDataServiceVersion: ['3.0']
       Prefer: [return-no-content]
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [410c3b59-981e-11e7-88cd-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:36 GMT']
+      x-ms-client-request-id: [f89331fd-a294-11e7-a6a0-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:30:36 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/Tables
@@ -21,12 +21,12 @@ interactions:
       cache-control: [no-cache]
       content-length: ['0']
       dataserviceid: ['https://storagename.table.core.windows.net/Tables(''tablea54a0b7c'')']
-      date: ['Wed, 13 Sep 2017 00:55:35 GMT']
+      date: ['Tue, 26 Sep 2017 08:30:35 GMT']
       location: ['https://storagename.table.core.windows.net/Tables(''tablea54a0b7c'')']
       preference-applied: [return-no-content]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [d063c1ae-0002-00e7-342b-2c44d9000000]
+      x-ms-request-id: [6376f4a9-0002-0047-6ea1-36f960000000]
       x-ms-version: ['2017-04-17']
     status: {code: 204, message: No Content}
 - request:
@@ -37,8 +37,8 @@ interactions:
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [41246823-981e-11e7-888a-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:36 GMT']
+      x-ms-client-request-id: [f8d5d61c-a294-11e7-ae5c-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:30:37 GMT']
       x-ms-version: ['2017-04-17']
     method: GET
     uri: https://storagename.table.core.windows.net/Tables('tablea54a0b7c')
@@ -47,11 +47,11 @@ interactions:
     headers:
       cache-control: [no-cache]
       content-type: [application/json;odata=nometadata;streaming=true;charset=utf-8]
-      date: ['Wed, 13 Sep 2017 00:55:35 GMT']
+      date: ['Tue, 26 Sep 2017 08:30:35 GMT']
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [d063c1bc-0002-00e7-3f2b-2c44d9000000]
+      x-ms-request-id: [6376f4b3-0002-0047-76a1-36f960000000]
       x-ms-version: ['2017-04-17']
     status: {code: 200, message: OK}
 version: 1

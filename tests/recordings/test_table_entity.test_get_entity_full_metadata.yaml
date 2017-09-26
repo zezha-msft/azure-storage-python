@@ -16,8 +16,8 @@ interactions:
       MaxDataServiceVersion: ['3.0']
       Prefer: [return-no-content]
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [5264d2de-981e-11e7-bb36-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:56:05 GMT']
+      x-ms-client-request-id: [2aa785bd-a295-11e7-97fc-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:32:00 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/uttabled1cb135f
@@ -27,13 +27,13 @@ interactions:
       cache-control: [no-cache]
       content-length: ['0']
       dataserviceid: ['https://storagename.table.core.windows.net/uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')']
-      date: ['Wed, 13 Sep 2017 00:56:05 GMT']
-      etag: [W/"datetime'2017-09-13T00%3A56%3A05.5953834Z'"]
+      date: ['Tue, 26 Sep 2017 08:31:59 GMT']
+      etag: [W/"datetime'2017-09-26T08%3A32%3A00.6282301Z'"]
       location: ['https://storagename.table.core.windows.net/uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')']
       preference-applied: [return-no-content]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [5df5c5d8-0002-0097-3d2b-2c371d000000]
+      x-ms-request-id: [3423de7b-0002-000c-4ea1-360533000000]
       x-ms-version: ['2017-04-17']
     status: {code: 204, message: No Content}
 - request:
@@ -44,22 +44,22 @@ interactions:
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [52779bab-981e-11e7-adee-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:56:05 GMT']
+      x-ms-client-request-id: [2ae89a05-a295-11e7-b6b8-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:32:01 GMT']
       x-ms-version: ['2017-04-17']
     method: GET
     uri: https://storagename.table.core.windows.net/uttabled1cb135f(PartitionKey='pkd1cb135f',RowKey='rkd1cb135f')
   response:
-    body: {string: !!python/unicode '{"odata.metadata":"https://storagename.table.core.windows.net/$metadata#uttabled1cb135f/@Element","odata.type":"storagename.uttabled1cb135f","odata.id":"https://storagename.table.core.windows.net/uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')","odata.etag":"W/\"datetime''2017-09-13T00%3A56%3A05.5953834Z''\"","odata.editLink":"uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')","PartitionKey":"pkd1cb135f","RowKey":"rkd1cb135f","Timestamp@odata.type":"Edm.DateTime","Timestamp":"2017-09-13T00:56:05.5953834Z","binary@odata.type":"Edm.Binary","binary":"YmluYXJ5","ratio":3.1,"age@odata.type":"Edm.Int64","age":"39","married":true,"sex":"male","large@odata.type":"Edm.Int64","large":"933311100","birthday@odata.type":"Edm.DateTime","birthday":"1970-10-04T00:00:00Z","evenratio":3.0,"clsid@odata.type":"Edm.Guid","clsid":"c9da6455-213d-42c9-9a79-3e9149a57833","Birthday@odata.type":"Edm.DateTime","Birthday":"1973-10-04T00:00:00Z","other":20,"deceased":false}'}
+    body: {string: !!python/unicode '{"odata.metadata":"https://storagename.table.core.windows.net/$metadata#uttabled1cb135f/@Element","odata.type":"storagename.uttabled1cb135f","odata.id":"https://storagename.table.core.windows.net/uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')","odata.etag":"W/\"datetime''2017-09-26T08%3A32%3A00.6282301Z''\"","odata.editLink":"uttabled1cb135f(PartitionKey=''pkd1cb135f'',RowKey=''rkd1cb135f'')","PartitionKey":"pkd1cb135f","RowKey":"rkd1cb135f","Timestamp@odata.type":"Edm.DateTime","Timestamp":"2017-09-26T08:32:00.6282301Z","binary@odata.type":"Edm.Binary","binary":"YmluYXJ5","ratio":3.1,"age@odata.type":"Edm.Int64","age":"39","married":true,"sex":"male","large@odata.type":"Edm.Int64","large":"933311100","birthday@odata.type":"Edm.DateTime","birthday":"1970-10-04T00:00:00Z","evenratio":3.0,"clsid@odata.type":"Edm.Guid","clsid":"c9da6455-213d-42c9-9a79-3e9149a57833","Birthday@odata.type":"Edm.DateTime","Birthday":"1973-10-04T00:00:00Z","other":20,"deceased":false}'}
     headers:
       cache-control: [no-cache]
       content-type: [application/json;odata=fullmetadata;streaming=true;charset=utf-8]
-      date: ['Wed, 13 Sep 2017 00:56:05 GMT']
-      etag: [W/"datetime'2017-09-13T00%3A56%3A05.5953834Z'"]
+      date: ['Tue, 26 Sep 2017 08:31:59 GMT']
+      etag: [W/"datetime'2017-09-26T08%3A32%3A00.6282301Z'"]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [5df5c5dc-0002-0097-3f2b-2c371d000000]
+      x-ms-request-id: [3423de86-0002-000c-57a1-360533000000]
       x-ms-version: ['2017-04-17']
     status: {code: 200, message: OK}
 version: 1

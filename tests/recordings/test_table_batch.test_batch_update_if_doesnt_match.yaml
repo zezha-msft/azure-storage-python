@@ -16,8 +16,8 @@ interactions:
       MaxDataServiceVersion: ['3.0']
       Prefer: [return-no-content]
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [45eecb23-981e-11e7-8570-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:44 GMT']
+      x-ms-client-request-id: [0761be2e-a295-11e7-82cf-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:31:01 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/table3741440
@@ -27,22 +27,22 @@ interactions:
       cache-control: [no-cache]
       content-length: ['0']
       dataserviceid: ['https://storagename.table.core.windows.net/table3741440(PartitionKey=''pk3741440'',RowKey=''rk3741440'')']
-      date: ['Wed, 13 Sep 2017 00:55:44 GMT']
-      etag: [W/"datetime'2017-09-13T00%3A55%3A44.7199813Z'"]
+      date: ['Tue, 26 Sep 2017 08:30:59 GMT']
+      etag: [W/"datetime'2017-09-26T08%3A31%3A00.4206108Z'"]
       location: ['https://storagename.table.core.windows.net/table3741440(PartitionKey=''pk3741440'',RowKey=''rk3741440'')']
       preference-applied: [return-no-content]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [0498c2e7-0002-0010-672b-2c6232000000]
+      x-ms-request-id: [bb73e828-0002-0008-2ba1-368834000000]
       x-ms-version: ['2017-04-17']
     status: {code: 204, message: No Content}
 - request:
-    body: !!python/unicode '--batch_46028c70-981e-11e7-8c86-b8e8564491f6
+    body: !!python/unicode '--batch_07a742e6-a295-11e7-aac0-b8e8564491f6
 
-      Content-Type: multipart/mixed; boundary=changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      Content-Type: multipart/mixed; boundary=changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
       Content-Type: application/http
 
@@ -67,50 +67,50 @@ interactions:
       "aquarius"}
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6--
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6--
 
-      --batch_46028c70-981e-11e7-8c86-b8e8564491f6--'
+      --batch_07a742e6-a295-11e7-aac0-b8e8564491f6--'
     headers:
       Connection: [keep-alive]
       Content-Length: ['767']
-      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_46028c70-981e-11e7-8c86-b8e8564491f6']
+      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_07a742e6-a295-11e7-aac0-b8e8564491f6']
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [4602901e-981e-11e7-b690-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:44 GMT']
+      x-ms-client-request-id: [07a74680-a295-11e7-9c34-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:31:02 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/$batch
   response:
-    body: {string: !!python/unicode "--batchresponse_eb1f75df-a164-456e-9a30-01def8f5a92e\r\
-        \nContent-Type: multipart/mixed; boundary=changesetresponse_d1d158cf-7430-4651-bcc7-3bba21a13112\r\
-        \n\r\n--changesetresponse_d1d158cf-7430-4651-bcc7-3bba21a13112\r\nContent-Type:\
+    body: {string: !!python/unicode "--batchresponse_4bf85a45-482e-43f4-ab06-9494b6ce722f\r\
+        \nContent-Type: multipart/mixed; boundary=changesetresponse_98e43a2d-4ee5-4bf5-b591-90456f4a9470\r\
+        \n\r\n--changesetresponse_98e43a2d-4ee5-4bf5-b591-90456f4a9470\r\nContent-Type:\
         \ application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nHTTP/1.1 412\
         \ Precondition Failed\r\nContent-ID: 1\r\nX-Content-Type-Options: nosniff\r\
         \nCache-Control: no-cache\r\nDataServiceVersion: 3.0;\r\nContent-Type: application/json;odata=minimalmetadata;streaming=true;charset=utf-8\r\
         \n\r\n{\"odata.error\":{\"code\":\"UpdateConditionNotSatisfied\",\"message\"\
         :{\"lang\":\"en-US\",\"value\":\"The update condition specified in the request\
-        \ was not satisfied.\\nRequestId:0498c2f1-0002-0010-6e2b-2c6232000000\\nTime:2017-09-13T00:55:44.7620132Z\"\
-        }}}\r\n--changesetresponse_d1d158cf-7430-4651-bcc7-3bba21a13112--\r\n--batchresponse_eb1f75df-a164-456e-9a30-01def8f5a92e--\r\
+        \ was not satisfied.\\nRequestId:bb73e82f-0002-0008-30a1-368834000000\\nTime:2017-09-26T08:31:00.5316136Z\"\
+        }}}\r\n--changesetresponse_98e43a2d-4ee5-4bf5-b591-90456f4a9470--\r\n--batchresponse_4bf85a45-482e-43f4-ab06-9494b6ce722f--\r\
         \n"}
     headers:
       cache-control: [no-cache]
-      content-type: [multipart/mixed; boundary=batchresponse_eb1f75df-a164-456e-9a30-01def8f5a92e]
-      date: ['Wed, 13 Sep 2017 00:55:44 GMT']
+      content-type: [multipart/mixed; boundary=batchresponse_4bf85a45-482e-43f4-ab06-9494b6ce722f]
+      date: ['Tue, 26 Sep 2017 08:30:59 GMT']
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [0498c2f1-0002-0010-6e2b-2c6232000000]
+      x-ms-request-id: [bb73e82f-0002-0008-30a1-368834000000]
       x-ms-version: ['2017-04-17']
     status: {code: 202, message: Accepted}
 - request:
-    body: !!python/unicode '--batch_46028c70-981e-11e7-8c86-b8e8564491f6
+    body: !!python/unicode '--batch_07a742e6-a295-11e7-aac0-b8e8564491f6
 
-      Content-Type: multipart/mixed; boundary=changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      Content-Type: multipart/mixed; boundary=changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
       Content-Type: application/http
 
@@ -135,50 +135,50 @@ interactions:
       "aquarius"}
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6--
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6--
 
-      --batch_46028c70-981e-11e7-8c86-b8e8564491f6--'
+      --batch_07a742e6-a295-11e7-aac0-b8e8564491f6--'
     headers:
       Connection: [keep-alive]
       Content-Length: ['767']
-      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_46028c70-981e-11e7-8c86-b8e8564491f6']
+      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_07a742e6-a295-11e7-aac0-b8e8564491f6']
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [4602901e-981e-11e7-b690-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:45 GMT']
+      x-ms-client-request-id: [07a74680-a295-11e7-9c34-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:31:03 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/$batch
   response:
-    body: {string: !!python/unicode "--batchresponse_c1324ba9-1466-4f1b-bb29-9adab101e409\r\
-        \nContent-Type: multipart/mixed; boundary=changesetresponse_4724ea34-bf00-44a5-9d76-e6ab41ec292f\r\
-        \n\r\n--changesetresponse_4724ea34-bf00-44a5-9d76-e6ab41ec292f\r\nContent-Type:\
+    body: {string: !!python/unicode "--batchresponse_41b30237-0fd6-4e6a-8416-fee27fa775e3\r\
+        \nContent-Type: multipart/mixed; boundary=changesetresponse_51d6ebd2-c5d1-4cee-93f2-9eb139110ac5\r\
+        \n\r\n--changesetresponse_51d6ebd2-c5d1-4cee-93f2-9eb139110ac5\r\nContent-Type:\
         \ application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nHTTP/1.1 412\
         \ Precondition Failed\r\nContent-ID: 1\r\nX-Content-Type-Options: nosniff\r\
         \nCache-Control: no-cache\r\nDataServiceVersion: 3.0;\r\nContent-Type: application/json;odata=minimalmetadata;streaming=true;charset=utf-8\r\
         \n\r\n{\"odata.error\":{\"code\":\"UpdateConditionNotSatisfied\",\"message\"\
         :{\"lang\":\"en-US\",\"value\":\"The update condition specified in the request\
-        \ was not satisfied.\\nRequestId:0498c3f3-0002-0010-552b-2c6232000000\\nTime:2017-09-13T00:55:45.8037940Z\"\
-        }}}\r\n--changesetresponse_4724ea34-bf00-44a5-9d76-e6ab41ec292f--\r\n--batchresponse_c1324ba9-1466-4f1b-bb29-9adab101e409--\r\
+        \ was not satisfied.\\nRequestId:bb73e86e-0002-0008-6ea1-368834000000\\nTime:2017-09-26T08:31:01.6446506Z\"\
+        }}}\r\n--changesetresponse_51d6ebd2-c5d1-4cee-93f2-9eb139110ac5--\r\n--batchresponse_41b30237-0fd6-4e6a-8416-fee27fa775e3--\r\
         \n"}
     headers:
       cache-control: [no-cache]
-      content-type: [multipart/mixed; boundary=batchresponse_c1324ba9-1466-4f1b-bb29-9adab101e409]
-      date: ['Wed, 13 Sep 2017 00:55:45 GMT']
+      content-type: [multipart/mixed; boundary=batchresponse_41b30237-0fd6-4e6a-8416-fee27fa775e3]
+      date: ['Tue, 26 Sep 2017 08:31:00 GMT']
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [0498c3f3-0002-0010-552b-2c6232000000]
+      x-ms-request-id: [bb73e86e-0002-0008-6ea1-368834000000]
       x-ms-version: ['2017-04-17']
     status: {code: 202, message: Accepted}
 - request:
-    body: !!python/unicode '--batch_46028c70-981e-11e7-8c86-b8e8564491f6
+    body: !!python/unicode '--batch_07a742e6-a295-11e7-aac0-b8e8564491f6
 
-      Content-Type: multipart/mixed; boundary=changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      Content-Type: multipart/mixed; boundary=changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6
 
       Content-Type: application/http
 
@@ -203,41 +203,41 @@ interactions:
       "aquarius"}
 
 
-      --changeset_46028d3a-981e-11e7-9935-b8e8564491f6--
+      --changeset_07a743ae-a295-11e7-bbdf-b8e8564491f6--
 
-      --batch_46028c70-981e-11e7-8c86-b8e8564491f6--'
+      --batch_07a742e6-a295-11e7-aac0-b8e8564491f6--'
     headers:
       Connection: [keep-alive]
       Content-Length: ['767']
-      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_46028c70-981e-11e7-8c86-b8e8564491f6']
+      Content-Type: [!!python/unicode 'multipart/mixed; boundary=batch_07a742e6-a295-11e7-aac0-b8e8564491f6']
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [4602901e-981e-11e7-b690-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:46 GMT']
+      x-ms-client-request-id: [07a74680-a295-11e7-9c34-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:31:04 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/$batch
   response:
-    body: {string: !!python/unicode "--batchresponse_2a6058f8-4575-4f2b-a90c-97538b3a7d4c\r\
-        \nContent-Type: multipart/mixed; boundary=changesetresponse_c20e1f7c-f5a4-4377-80f5-8af4589e4ffa\r\
-        \n\r\n--changesetresponse_c20e1f7c-f5a4-4377-80f5-8af4589e4ffa\r\nContent-Type:\
+    body: {string: !!python/unicode "--batchresponse_0f42aa47-a5a8-4a6c-99db-6e1e69b3ea69\r\
+        \nContent-Type: multipart/mixed; boundary=changesetresponse_d676460a-97ef-423d-8c67-40b6b080fc55\r\
+        \n\r\n--changesetresponse_d676460a-97ef-423d-8c67-40b6b080fc55\r\nContent-Type:\
         \ application/http\r\nContent-Transfer-Encoding: binary\r\n\r\nHTTP/1.1 412\
         \ Precondition Failed\r\nContent-ID: 1\r\nX-Content-Type-Options: nosniff\r\
         \nCache-Control: no-cache\r\nDataServiceVersion: 3.0;\r\nContent-Type: application/json;odata=minimalmetadata;streaming=true;charset=utf-8\r\
         \n\r\n{\"odata.error\":{\"code\":\"UpdateConditionNotSatisfied\",\"message\"\
         :{\"lang\":\"en-US\",\"value\":\"The update condition specified in the request\
-        \ was not satisfied.\\nRequestId:0498c51d-0002-0010-6b2b-2c6232000000\\nTime:2017-09-13T00:55:46.8445750Z\"\
-        }}}\r\n--changesetresponse_c20e1f7c-f5a4-4377-80f5-8af4589e4ffa--\r\n--batchresponse_2a6058f8-4575-4f2b-a90c-97538b3a7d4c--\r\
+        \ was not satisfied.\\nRequestId:bb73e8a6-0002-0008-25a1-368834000000\\nTime:2017-09-26T08:31:02.7556883Z\"\
+        }}}\r\n--changesetresponse_d676460a-97ef-423d-8c67-40b6b080fc55--\r\n--batchresponse_0f42aa47-a5a8-4a6c-99db-6e1e69b3ea69--\r\
         \n"}
     headers:
       cache-control: [no-cache]
-      content-type: [multipart/mixed; boundary=batchresponse_2a6058f8-4575-4f2b-a90c-97538b3a7d4c]
-      date: ['Wed, 13 Sep 2017 00:55:46 GMT']
+      content-type: [multipart/mixed; boundary=batchresponse_0f42aa47-a5a8-4a6c-99db-6e1e69b3ea69]
+      date: ['Tue, 26 Sep 2017 08:31:02 GMT']
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [0498c51d-0002-0010-6b2b-2c6232000000]
+      x-ms-request-id: [bb73e8a6-0002-0008-25a1-368834000000]
       x-ms-version: ['2017-04-17']
     status: {code: 202, message: Accepted}
 - request:
@@ -248,22 +248,22 @@ interactions:
       DataServiceVersion: [3.0;NetFx]
       MaxDataServiceVersion: ['3.0']
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [4745b738-981e-11e7-ab6c-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:47 GMT']
+      x-ms-client-request-id: [090af026-a295-11e7-b913-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:31:04 GMT']
       x-ms-version: ['2017-04-17']
     method: GET
     uri: https://storagename.table.core.windows.net/table3741440(PartitionKey='pk3741440',RowKey='rk3741440')
   response:
-    body: {string: !!python/unicode '{"odata.metadata":"https://storagename.table.core.windows.net/$metadata#table3741440/@Element","odata.etag":"W/\"datetime''2017-09-13T00%3A55%3A44.7199813Z''\"","PartitionKey":"pk3741440","RowKey":"rk3741440","Timestamp":"2017-09-13T00:55:44.7199813Z","binary@odata.type":"Edm.Binary","binary":"YmluYXJ5","ratio":3.1,"age@odata.type":"Edm.Int64","age":"39","married":true,"sex":"male","large@odata.type":"Edm.Int64","large":"933311100","birthday@odata.type":"Edm.DateTime","birthday":"1970-10-04T00:00:00Z","evenratio":3.0,"clsid@odata.type":"Edm.Guid","clsid":"c9da6455-213d-42c9-9a79-3e9149a57833","Birthday@odata.type":"Edm.DateTime","Birthday":"1973-10-04T00:00:00Z","other":20,"deceased":false}'}
+    body: {string: !!python/unicode '{"odata.metadata":"https://storagename.table.core.windows.net/$metadata#table3741440/@Element","odata.etag":"W/\"datetime''2017-09-26T08%3A31%3A00.4206108Z''\"","PartitionKey":"pk3741440","RowKey":"rk3741440","Timestamp":"2017-09-26T08:31:00.4206108Z","binary@odata.type":"Edm.Binary","binary":"YmluYXJ5","ratio":3.1,"age@odata.type":"Edm.Int64","age":"39","married":true,"sex":"male","large@odata.type":"Edm.Int64","large":"933311100","birthday@odata.type":"Edm.DateTime","birthday":"1970-10-04T00:00:00Z","evenratio":3.0,"clsid@odata.type":"Edm.Guid","clsid":"c9da6455-213d-42c9-9a79-3e9149a57833","Birthday@odata.type":"Edm.DateTime","Birthday":"1973-10-04T00:00:00Z","other":20,"deceased":false}'}
     headers:
       cache-control: [no-cache]
       content-type: [application/json;odata=minimalmetadata;streaming=true;charset=utf-8]
-      date: ['Wed, 13 Sep 2017 00:55:46 GMT']
-      etag: [W/"datetime'2017-09-13T00%3A55%3A44.7199813Z'"]
+      date: ['Tue, 26 Sep 2017 08:31:02 GMT']
+      etag: [W/"datetime'2017-09-26T08%3A31%3A00.4206108Z'"]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       transfer-encoding: [chunked]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [0498c526-0002-0010-742b-2c6232000000]
+      x-ms-request-id: [bb73e8ad-0002-0008-2ca1-368834000000]
       x-ms-version: ['2017-04-17']
     status: {code: 200, message: OK}
 version: 1

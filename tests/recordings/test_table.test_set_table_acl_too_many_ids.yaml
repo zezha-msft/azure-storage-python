@@ -10,8 +10,8 @@ interactions:
       MaxDataServiceVersion: ['3.0']
       Prefer: [return-no-content]
       User-Agent: [Azure-Storage/0.36.0 (Python CPython 2.7.10; Darwin 16.7.0)]
-      x-ms-client-request-id: [40308feb-981e-11e7-9ce3-b8e8564491f6]
-      x-ms-date: ['Wed, 13 Sep 2017 00:55:35 GMT']
+      x-ms-client-request-id: [f61cb59c-a294-11e7-9d34-b8e8564491f6]
+      x-ms-date: ['Tue, 26 Sep 2017 08:30:32 GMT']
       x-ms-version: ['2017-04-17']
     method: POST
     uri: https://storagename.table.core.windows.net/Tables
@@ -21,12 +21,12 @@ interactions:
       cache-control: [no-cache]
       content-length: ['0']
       dataserviceid: ['https://storagename.table.core.windows.net/Tables(''table6f17111b'')']
-      date: ['Wed, 13 Sep 2017 00:55:34 GMT']
+      date: ['Tue, 26 Sep 2017 08:30:32 GMT']
       location: ['https://storagename.table.core.windows.net/Tables(''table6f17111b'')']
       preference-applied: [return-no-content]
       server: [Windows-Azure-Table/1.0 Microsoft-HTTPAPI/2.0]
       x-content-type-options: [nosniff]
-      x-ms-request-id: [c8714cc1-0002-0094-192b-2c341a000000]
+      x-ms-request-id: [1e0623eb-0002-000d-63a1-365aef000000]
       x-ms-version: ['2017-04-17']
     status: {code: 204, message: No Content}
 version: 1

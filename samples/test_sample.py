@@ -19,25 +19,6 @@ from samples.advanced import (
     AuthenticationSamples,
     ClientSamples,
 )
-from samples.blob import (
-    BlobSasSamples,
-    ContainerSamples,
-    BlockBlobSamples,
-    AppendBlobSamples,
-    PageBlobSamples,
-    BlobEncryptionSamples,
-)
-from samples.file import (
-    FileSasSamples,
-    ShareSamples,
-    DirectorySamples,
-    FileSamples,
-)
-from samples.queue import (
-    QueueSasSamples,
-    QueueSamples,
-    QueueEncryptionSamples,
-)
 from samples.table import (
     TableSasSamples,
     TableEncryptionSamples,
@@ -66,56 +47,12 @@ class SampleTest(unittest.TestCase):
                                                account_key=account_key,
                                                sas_token=sas)
 
-    def test_container_samples(self):
-        container = ContainerSamples(self.account)
-        container.run_all_samples()
-
-    def test_block_blob_samples(self):
-        blob = BlockBlobSamples(self.account)
-        blob.run_all_samples()
-
-    def test_append_blob_samples(self):
-        blob = AppendBlobSamples(self.account)
-        blob.run_all_samples()
-
-    def test_page_blob_samples(self):
-        blob = PageBlobSamples(self.account)
-        blob.run_all_samples()
-
-    def test_queue_samples(self):
-        queue = QueueSamples(self.account)
-        queue.run_all_samples()
-
     def test_table_samples(self):
         table = TableSamples(self.account)
         table.run_all_samples()
 
-    def test_share_samples(self):
-        share = ShareSamples(self.account)
-        share.run_all_samples()
-
-    def test_directory_samples(self):
-        directory = DirectorySamples(self.account)
-        directory.run_all_samples()
-
-    def test_file_samples(self):
-        file = FileSamples(self.account)
-        file.run_all_samples()
-
-    def test_blob_sas_samples(self):
-        sas = BlobSasSamples(self.account)
-        sas.run_all_samples()
-
-    def test_queue_sas_samples(self):
-        sas = QueueSasSamples(self.account)
-        sas.run_all_samples()
-
     def test_table_sas_samples(self):
         sas = TableSasSamples(self.account)
-        sas.run_all_samples()
-
-    def test_file_sas_samples(self):
-        sas = FileSasSamples(self.account)
         sas.run_all_samples()
 
     def test_authentication_samples(self):
@@ -126,16 +63,8 @@ class SampleTest(unittest.TestCase):
         client = ClientSamples()
         client.run_all_samples()
 
-    def test_queue_encryption_samples(self):
-        encryption = QueueEncryptionSamples(self.account)
-        encryption.run_all_samples()
-
     def test_table_encryption_samples(self):
         encryption = TableEncryptionSamples(self.account)
-        encryption.run_all_samples()
-
-    def test_blob_encryption_samples(self):
-        encryption = BlobEncryptionSamples(self.account)
         encryption.run_all_samples()
 
 

@@ -10,10 +10,7 @@ please visit https://github.com/Azure/azure-sdk-for-python
    
 Documentation:
 --------------
-* `Blob Getting Started Doc <https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-blob-storage/>`__ -- (:doc:`API <ref/azure.storage.blob>`)
-* `Queue Getting Started Doc <https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-queue-storage/>`__ -- (:doc:`API <ref/azure.storage.queue>`)
 * `Table Getting Started Doc <https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-table-storage/>`__ -- (:doc:`API <ref/azure.storage.table>`)
-* `File Getting Started Doc <https://azure.microsoft.com/en-us/documentation/articles/storage-python-how-to-use-file-storage/>`__ -- (:doc:`API <ref/azure.storage.file>`)
 * :ref:`Reference Documentation - All Services<modindex>`
 
 
