@@ -29,36 +29,43 @@ ONE_KB = 1024
 
 # container used for performance tests
 CONTAINER_NAME = 'performance'
+DEFAULT_ACCOUNT_NAME = ''
+DEFAULT_ACCOUNT_KEY = ''
 
 
 def main():
     # step 0: perform setup, parse the command line arguments and set up the container
     parser = argparse.ArgumentParser(description='Performance tests for blob')
-    parser.add_argument('--number_of_blobs', '-n')
-    parser.add_argument('--blob_size', '-b')
+    parser.add_argument('--blobs', '-n')
+    parser.add_argument('--blobSize', '-b')
     parser.add_argument('--concurrency', '-c')
-    parser.add_argument('--max_connections', '-m')
-    parser.add_argument('--output_result_file_name', '-o')
+    parser.add_argument('--parallelRequests', '-m')
+    parser.add_argument('--output_upload_result_file_name', '-ou')
+    parser.add_argument('--output_download_result_file_name', '-od')
+    parser.add_argument('--output_delete_file_name', '-or')
     parser.add_argument('--output_graph_file_name', '-g')
-    parser.add_argument('--protocol', '-p')
+    parser.add_argument('--useHttps', '-p')
     parser.add_argument('--account', '-a')
     parser.add_argument('--key', '-k')
     args = parser.parse_args()
 
     # read in inputs
-    num_of_blobs = int(args.number_of_blobs)
-    blob_size_in_kb = int(args.blob_size)
+    num_of_blobs = int(args.blobs)
+    blob_size_in_kb = int(args.blobSize)
     concurrency = int(args.concurrency)
-    max_connections = int(args.max_connections)
-    output_result_file_name = args.output_result_file_name
+    max_connections = int(args.parallelRequests)
+    output_upload_result_file_name = args.output_upload_result_file_name
+    output_download_result_file_name = args.output_download_result_file_name
+    output_delete_result_file_name = args.output_delete_file_name
     output_graph_file_name = args.output_graph_file_name
-    protocol = args.protocol
-    account_name = args.account
-    account_key = args.key
+    protocol = 'https' if args.useHttps == 'true' else 'http'
+    account_name = DEFAULT_ACCOUNT_NAME if args.account is None else args.account
+    account_key = DEFAULT_ACCOUNT_KEY if args.key is None else args.key
 
     # delete the existing result file and log the arguments that were given by the user
-    delete_file_if_exists(output_result_file_name)
-    log_args(args, output_result_file_name)
+    delete_file_if_exists(output_upload_result_file_name)
+    delete_file_if_exists(output_delete_result_file_name)
+    delete_file_if_exists(output_download_result_file_name)
     bs = BlockBlobService(account_name, account_key, protocol=protocol)
     bs.create_container(CONTAINER_NAME)
 
@@ -69,10 +76,15 @@ def main():
 
     # step 2: launch watchdog to monitor memory and CPU usage, in the detached mode, so that when the perf test exits
     # the watch dog process does not die
-    subprocess.Popen(['python', 'watch_dog.py', '-p', str(os.getpid()), '-g', output_graph_file_name], creationflags=DETACHED_PROCESS)
+    # processes are handled a bit differently on windows
+    if os.name == 'Windows':
+        subprocess.Popen(['python', 'watch_dog.py', '-p', str(os.getpid()), '-g', output_graph_file_name], creationflags=DETACHED_PROCESS)
+    else:
+        subprocess.Popen(['python', 'watch_dog.py', '-p', str(os.getpid()), '-g', output_graph_file_name])
+
     print("Waiting for watch dog to boot up...")
     time.sleep(5)
-    overall_start_time = datetime.datetime.utcnow()
+    operation_start_time = datetime.datetime.utcnow()
 
     # step 3: perform uploads
     executor = concurrent.futures.ThreadPoolExecutor(concurrency)
@@ -84,12 +96,13 @@ def main():
     # each future returns the amount of time it took to perform the action
     upload_results = [future.result() for future in futures]
     print("UPLOAD DONE FOR", len(upload_results), "FILES")
-    compute_result_indicators(upload_results, "===UPLOAD RESULTS===", output_result_file_name, overall_start_time)
+    compute_result_indicators(upload_results, "Insert", output_upload_result_file_name, operation_start_time, args)
 
     # step 4: take off the files that we failed to upload
     list_of_files = filer_out_unsuccessful_files(list_of_files, upload_results)
 
     # step 5: perform downloads
+    operation_start_time = datetime.datetime.utcnow()
     futures = []
     for file in list_of_files:
         future = executor.submit(download_blob, bs, file, max_connections)
@@ -98,7 +111,7 @@ def main():
     # each future returns the amount of time it took to perform the action
     download_results = [future.result() for future in futures]
     print("DOWNLOAD DONE FOR", len(download_results), "FILES")
-    compute_result_indicators(download_results, "\n===DOWNLOAD RESULTS===", output_result_file_name, overall_start_time)
+    compute_result_indicators(download_results, "Get", output_download_result_file_name, operation_start_time, args)
 
     # step 6: pick a random file to check the content
     random_check = list_of_files[randint(0, num_of_blobs - 1)]
@@ -110,6 +123,7 @@ def main():
     list_of_files = filer_out_unsuccessful_files(list_of_files, download_results)
 
     # step 8: perform deletes
+    operation_start_time = datetime.datetime.utcnow()
     futures = []
     for file in list_of_files:
         future = executor.submit(delete_blob, bs, file)
@@ -118,7 +132,7 @@ def main():
     # each future returns the amount of time it took to perform the action
     delete_results = [future.result() for future in futures]
     print("DELETE DONE FOR", len(delete_results), "FILES")
-    compute_result_indicators(delete_results, "\n===DELETE RESULTS===", output_result_file_name, overall_start_time)
+    compute_result_indicators(delete_results, "Delete", output_delete_result_file_name, operation_start_time, args)
 
 
 # given a blob name, find the local input file and upload it
@@ -245,7 +259,7 @@ def compare_local_files_for_blob(name):
 
 # compute the time that has elapsed since the given start_time, in seconds
 def compute_elapsed_time(start_time):
-    return (datetime.datetime.utcnow() - start_time).total_seconds()
+    return (datetime.datetime.utcnow() - start_time).total_seconds() * 1000
 
 
 # write out what the command line arguments were
@@ -261,7 +275,7 @@ def log_args(args, output_file_name):
 
 
 # compute the min/max/avg of the result times, as well as percentile average and
-def compute_result_indicators(results, title, output_file_name, overall_start_time):
+def compute_result_indicators(results, title, output_file_name, operation_start_time, args):
     total_count = len(results)
     successful_times = [x for x in results if x != -1]
     successful_count = len(successful_times)
@@ -269,24 +283,63 @@ def compute_result_indicators(results, title, output_file_name, overall_start_ti
     np_cumsum = np.cumsum(np_results)
 
     with open(output_file_name, 'a') as the_file:
-        the_file.write(title + "\n")
-        the_file.write("operation completed at: " + str(compute_elapsed_time(overall_start_time))
-                       + " s after watch dog started.\n")
-        the_file.write("total count: " + str(total_count) + "\n")
-        the_file.write("success count: " + str(successful_count) + "\n")
-        the_file.write("exception count: " + str(total_count - successful_count) + "\n")
-        the_file.write("min: " + str(np.amin(np_results)) + "\n")
-        the_file.write("max: " + str(np.amax(np_results)) + "\n")
-        the_file.write("avg: " + str(np.average(np_results)) + "\n")
-        the_file.write("standard deviation: " + str(np.std(np_results)) + "\n")
+        the_file.write("Total time taken to run the test in ms : " +
+                       str(compute_elapsed_time(operation_start_time)) + "\n\n")
+        the_file.write("Start time : " + str(operation_start_time) + ", End time : "
+                       + str(datetime.datetime.utcnow()) + "\n\n")
+        the_file.write("Args:")
+        for key, value in args.__dict__.items():
+            # ignore the account key
+            if key != "key" and value is not None:
+                the_file.write(key + ": " + value + ", ")
+        the_file.write("\nRequest IDs for requests that took more than 90th percentile latency :\n\n")
+
+        the_file.write(title + "," + str(np.amin(np_results)) + "," + str(np.average(np_results))
+                       + "," + str(np.amax(np_results)) + ",\n")
+        the_file.write("Standard Deviation, " + str(np.std(np_results)) + ",\n")
+        the_file.write("Percentile, ")
 
         for i in PERCENTILE_LIST:
-            the_file.write("percentile " + str(i) + ": "
-                           + str(np.percentile(np_results, i)) + "\n")
+            the_file.write(str(np.percentile(np_results, i)) + ",")
+
+        the_file.write("\nAverages, ")
 
         for i in PERCENTILE_LIST:
-            the_file.write("average " + str(i) + ": "
-                           + str(np.percentile(np_cumsum, i) / (i / 100 * total_count)) + "\n")
+            the_file.write(str(np.percentile(np_cumsum, i) / (i / 100 * total_count)) + ",")
+
+        the_file.write("\nException Count = " + str(total_count - successful_count) + "\n")
+
+        the_file.write("UserProcessorTime,, PrivilegedProcessorTime, TotalProcessorTime\n\
+0,,0,0,\n\
+Working Set - Current,, Working Set - Peak in KB\n\
+0,,0,\n\
+Virtual Memory - Current,, Virtual Memory - Peak in KB\n\
+0,,0,\n\
+PagedMemory - Current,, PagedMemory - Peak in KB\n\
+0,,0,\n\
+NonPagedMemory in KB\n\
+0\n\
+PagedMemory in KB\n\
+0\n")
+        # alternate output format, better readability but not compatible with aggregator
+        # the_file.write(title + "\n")
+        # the_file.write("operation completed at: " + str(compute_elapsed_time(overall_start_time))
+        #                + " s after watch dog started.\n")
+        # the_file.write("total count: " + str(total_count) + "\n")
+        # the_file.write("success count: " + str(successful_count) + "\n")
+        # the_file.write("exception count: " + str(total_count - successful_count) + "\n")
+        # the_file.write("min: " + str(np.amin(np_results)) + "\n")
+        # the_file.write("max: " + str(np.amax(np_results)) + "\n")
+        # the_file.write("avg: " + str(np.average(np_results)) + "\n")
+        # the_file.write("standard deviation: " + str(np.std(np_results)) + "\n")
+        #
+        # for i in PERCENTILE_LIST:
+        #     the_file.write("percentile " + str(i) + ": "
+        #                    + str(np.percentile(np_results, i)) + "\n")
+        #
+        # for i in PERCENTILE_LIST:
+        #     the_file.write("average " + str(i) + ": "
+        #                    + str(np.percentile(np_cumsum, i) / (i / 100 * total_count)) + "\n")
 
     return results
 

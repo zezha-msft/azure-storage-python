@@ -59,7 +59,7 @@ def main():
     # row 3, column 1, index 1, this is at the top of the page
     plt.subplot(311)
     # cpu in red line, mem in blue line
-    plt.plot(times, system_cpu, 'r-', times, system_mem, 'b-')
+    plt.plot(times, system_cpu, 'ro', times, system_mem, 'b^')
     plt.xlabel('times(s)')
     plt.ylabel('usage(%)')
     plt.title('System CPU(red) and Memory Usage(blue)')
@@ -69,7 +69,7 @@ def main():
     # index 2 is kept empty on purpose, otherwise the axis label of the previous graph goes onto this graph
     plt.subplot(313)
     # cpu in red line, mem in blue line
-    plt.plot(times, process_cpu, 'r-', times, process_mem, 'b-')
+    plt.plot(times, process_cpu, 'ro', times, process_mem, 'b^')
     plt.xlabel('times(s)')
     plt.ylabel('usage(%)')
     plt.title('Process CPU(red) and Memory Usage(blue)')
