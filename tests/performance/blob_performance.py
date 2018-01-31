@@ -13,6 +13,11 @@ from random import randint
 import numpy as np
 import subprocess
 
+if os.sys.version_info >= (3,):
+    from io import BytesIO
+else:
+    from cStringIO import StringIO as BytesIO
+
 from azure.storage.blob import (
     BlockBlobService,
 )
@@ -34,7 +39,7 @@ DEFAULT_ACCOUNT_KEY = ''
 
 
 def main():
-    # step 0: perform setup, parse the command line arguments and set up the container
+    # step 0: perform setup, parse the command line arguments
     parser = argparse.ArgumentParser(description='Performance tests for blob')
     parser.add_argument('--blobs', '-n')
     parser.add_argument('--blobSize', '-b')
@@ -62,19 +67,20 @@ def main():
     account_name = DEFAULT_ACCOUNT_NAME if args.account is None else args.account
     account_key = DEFAULT_ACCOUNT_KEY if args.key is None else args.key
 
-    # delete the existing result file and log the arguments that were given by the user
+    # step 1: delete the existing result file and log the arguments that were given by the user
     delete_file_if_exists(output_upload_result_file_name)
     delete_file_if_exists(output_delete_result_file_name)
     delete_file_if_exists(output_download_result_file_name)
+
+    # step 2: set up the container
     bs = BlockBlobService(account_name, account_key, protocol=protocol)
     bs.create_container(CONTAINER_NAME)
 
-    # step 1: generate list of files to upload/download
-    list_of_files = ['test-file-' + str(i) + '.txt' for i in range(num_of_blobs)]
-    for file in list_of_files:
-        create_random_content_file(file, blob_size_in_kb)
+    # step 3: generate list of files to upload/download
+    list_of_blob_names = ['test-file-' + str(i) for i in range(num_of_blobs)]
+    blob_content = create_random_content(blob_size_in_kb)
 
-    # step 2: launch watchdog to monitor memory and CPU usage, in the detached mode, so that when the perf test exits
+    # step 4: launch watchdog to monitor memory and CPU usage, in the detached mode, so that when the perf test exits
     # the watch dog process does not die
     # processes are handled a bit differently on windows
     if os.name == 'Windows':
@@ -84,13 +90,14 @@ def main():
 
     print("Waiting for watch dog to boot up...")
     time.sleep(5)
-    operation_start_time = datetime.datetime.utcnow()
 
-    # step 3: perform uploads
+    # step 5: perform uploads
+    operation_start_time = datetime.datetime.utcnow()
     executor = concurrent.futures.ThreadPoolExecutor(concurrency)
     futures = []
-    for file in list_of_files:
-        future = executor.submit(upload_blob, bs, file, max_connections)
+    blob_size_in_bytes = blob_size_in_kb * ONE_KB
+    for blob_name in list_of_blob_names:
+        future = executor.submit(upload_blob, bs, blob_name, BytesIO(blob_content), blob_size_in_bytes, max_connections)
         futures.append(future)
 
     # each future returns the amount of time it took to perform the action
@@ -98,14 +105,14 @@ def main():
     print("UPLOAD DONE FOR", len(upload_results), "FILES")
     compute_result_indicators(upload_results, "Insert", output_upload_result_file_name, operation_start_time, args)
 
-    # step 4: take off the files that we failed to upload
-    list_of_files = filer_out_unsuccessful_files(list_of_files, upload_results)
+    # step 6: take off the files that we failed to upload
+    list_of_blob_names = filter_out_unsuccessful_files(list_of_blob_names, upload_results)
 
-    # step 5: perform downloads
+    # step 7: perform downloads
     operation_start_time = datetime.datetime.utcnow()
     futures = []
-    for file in list_of_files:
-        future = executor.submit(download_blob, bs, file, max_connections)
+    for blob_name in list_of_blob_names:
+        future = executor.submit(download_blob, bs, blob_name, max_connections, blob_content)
         futures.append(future)
 
     # each future returns the amount of time it took to perform the action
@@ -113,20 +120,14 @@ def main():
     print("DOWNLOAD DONE FOR", len(download_results), "FILES")
     compute_result_indicators(download_results, "Get", output_download_result_file_name, operation_start_time, args)
 
-    # step 6: pick a random file to check the content
-    random_check = list_of_files[randint(0, num_of_blobs - 1)]
-    if not compare_local_files_for_blob(random_check):
-        print("Random inspection failed on file:", random_check, "exiting tests as something is SERIOUSLY WRONG")
-        return
+    # step 8: take off the files that we failed to download
+    list_of_blob_names = filter_out_unsuccessful_files(list_of_blob_names, download_results)
 
-    # step 7: take off the files that we failed to download
-    list_of_files = filer_out_unsuccessful_files(list_of_files, download_results)
-
-    # step 8: perform deletes
+    # step 9: perform deletes
     operation_start_time = datetime.datetime.utcnow()
     futures = []
-    for file in list_of_files:
-        future = executor.submit(delete_blob, bs, file)
+    for blob_name in list_of_blob_names:
+        future = executor.submit(delete_blob, bs, blob_name)
         futures.append(future)
 
     # each future returns the amount of time it took to perform the action
@@ -136,15 +137,12 @@ def main():
 
 
 # given a blob name, find the local input file and upload it
-def upload_blob(bs, file_name, max_connections):
-    source_file_name = input_file(file_name)
-    destination_blob_name = file_name
+def upload_blob(bs, blob_name, stream, count, max_connections):
 
     # time the upload
     start_time = datetime.datetime.utcnow()
     try:
-        bs.create_blob_from_path(CONTAINER_NAME, destination_blob_name, source_file_name,
-                                 max_connections=max_connections)
+        bs.create_blob_from_stream(CONTAINER_NAME, blob_name, stream, count, max_connections=max_connections)
     except AzureException as e:
         # if failed, return -1 to indicate exception
         print(e)
@@ -154,17 +152,13 @@ def upload_blob(bs, file_name, max_connections):
 
 
 # given a blob name, download it to a local output file
-def download_blob(bs, file_name, max_connections):
-    source_blob_name = file_name
-    destination_file_name = output_file(file_name)
-
-    delete_file_if_exists(destination_file_name)
+def download_blob(bs, blob_name, max_connections, expected_content):
 
     # time the download
     start_time = datetime.datetime.utcnow()
 
     try:
-        bs.get_blob_to_path(CONTAINER_NAME, source_blob_name, destination_file_name, max_connections=max_connections)
+        blob = bs.get_blob_to_bytes(CONTAINER_NAME, blob_name, max_connections=max_connections)
     except AzureException as e:
         # if failed, return -1 to indicate exception
         print(e)
@@ -189,16 +183,6 @@ def delete_blob(bs, file_name):
     return compute_elapsed_time(start_time)
 
 
-# this function produces a file name that indicates it was uploaded to the service
-def input_file(name):
-    return 'input-' + name
-
-
-# this function produces a file name that indicates it was downloaded from the service
-def output_file(name):
-    return 'output-' + name
-
-
 # delete the output file if it already exists
 def delete_file_if_exists(name):
     if os.path.exists(name):
@@ -206,7 +190,7 @@ def delete_file_if_exists(name):
 
 
 # filter out files that failed during the previous action, their result (for time) would be -1
-def filer_out_unsuccessful_files(list_of_files, results):
+def filter_out_unsuccessful_files(list_of_files, results):
     new_list = []
     for index, result in enumerate(results):
         if result != -1:
@@ -214,67 +198,17 @@ def filer_out_unsuccessful_files(list_of_files, results):
     return new_list
 
 
-# this function generates random data and write them into a given file(with 'input-' prepended)
-# this is done so that we can identify the state of the file before it was uploaded
-def create_random_content_file(name, size_in_kb):
-    file_name = input_file(name)
-
-    # if the file already exists and is the right size, do not regenerate
-    if not os.path.exists(file_name) or os.path.getsize(file_name) != size_in_kb * 1024:
-        print('generating {0}'.format(name))
-        with open(file_name, 'wb') as stream:
-            for i in range(size_in_kb):
-                # write a KB at a time
-                stream.write(os.urandom(ONE_KB))
-
-
-# this function verifies if two given files have equal contents
-def are_file_contents_equal(first_file_path, second_file_path):
-    first_size = os.path.getsize(first_file_path)
-    second_size = os.path.getsize(second_file_path)
-
-    # fail fast if the files do not have the same size
-    if first_size != second_size:
-        return False
-    with open(first_file_path, 'rb') as first_stream:
-        with open(second_file_path, 'rb') as second_stream:
-            while True:
-                # read one KB at a time to compare
-                first_data = first_stream.read(ONE_KB)
-                second_data = second_stream.read(ONE_KB)
-
-                if first_data != second_data:
-                    return False
-                if not first_data:
-                    return True
-
-
-# given a blob name, compare its content before uploading and after downloading
-def compare_local_files_for_blob(name):
-    first_file_path = input_file(name)
-    second_file_path = output_file(name)
-
-    return are_file_contents_equal(first_file_path, second_file_path)
+# this function generates random data for the given size_in_kb
+def create_random_content(size_in_kb):
+    return os.urandom(ONE_KB * size_in_kb)
 
 
 # compute the time that has elapsed since the given start_time, in seconds
 def compute_elapsed_time(start_time):
-    return (datetime.datetime.utcnow() - start_time).total_seconds() * 1000
+    return (datetime.datetime.utcnow() - start_time).total_seconds() * 1000 * 1000
 
 
-# write out what the command line arguments were
-def log_args(args, output_file_name):
-    with open(output_file_name, 'a') as the_file:
-        the_file.write("===ARGS===" + "\n")
-
-        for key, value in args.__dict__.items():
-            # ignore the account key
-            if key != "key":
-                the_file.write("Arg:" + key + "=" + value + "\n")
-        the_file.write("\n")
-
-
-# compute the min/max/avg of the result times, as well as percentile average and
+# compute the min/max/avg of the result times, as well as percentile average and percentile values
 def compute_result_indicators(results, title, output_file_name, operation_start_time, args):
     total_count = len(results)
     successful_times = [x for x in results if x != -1]
@@ -321,25 +255,6 @@ NonPagedMemory in KB\n\
 0\n\
 PagedMemory in KB\n\
 0\n")
-        # alternate output format, better readability but not compatible with aggregator
-        # the_file.write(title + "\n")
-        # the_file.write("operation completed at: " + str(compute_elapsed_time(overall_start_time))
-        #                + " s after watch dog started.\n")
-        # the_file.write("total count: " + str(total_count) + "\n")
-        # the_file.write("success count: " + str(successful_count) + "\n")
-        # the_file.write("exception count: " + str(total_count - successful_count) + "\n")
-        # the_file.write("min: " + str(np.amin(np_results)) + "\n")
-        # the_file.write("max: " + str(np.amax(np_results)) + "\n")
-        # the_file.write("avg: " + str(np.average(np_results)) + "\n")
-        # the_file.write("standard deviation: " + str(np.std(np_results)) + "\n")
-        #
-        # for i in PERCENTILE_LIST:
-        #     the_file.write("percentile " + str(i) + ": "
-        #                    + str(np.percentile(np_results, i)) + "\n")
-        #
-        # for i in PERCENTILE_LIST:
-        #     the_file.write("average " + str(i) + ": "
-        #                    + str(np.percentile(np_cumsum, i) / (i / 100 * total_count)) + "\n")
 
     return results
 
