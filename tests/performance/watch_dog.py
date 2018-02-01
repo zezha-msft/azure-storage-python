@@ -52,7 +52,7 @@ def main():
             process_mem.append(p.memory_percent())
 
         # sleep for some time before capturing the state again
-        time.sleep(1)
+        time.sleep(5)
 
     # plot the system usage
     plt.figure(1)

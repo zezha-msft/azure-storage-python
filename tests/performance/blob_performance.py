@@ -112,7 +112,7 @@ def main():
     operation_start_time = datetime.datetime.utcnow()
     futures = []
     for blob_name in list_of_blob_names:
-        future = executor.submit(download_blob, bs, blob_name, max_connections, blob_content)
+        future = executor.submit(download_blob, bs, blob_name, max_connections)
         futures.append(future)
 
     # each future returns the amount of time it took to perform the action
@@ -152,13 +152,13 @@ def upload_blob(bs, blob_name, stream, count, max_connections):
 
 
 # given a blob name, download it to a local output file
-def download_blob(bs, blob_name, max_connections, expected_content):
+def download_blob(bs, blob_name, max_connections):
 
     # time the download
     start_time = datetime.datetime.utcnow()
 
     try:
-        blob = bs.get_blob_to_bytes(CONTAINER_NAME, blob_name, max_connections=max_connections)
+        bs.get_blob_to_bytes(CONTAINER_NAME, blob_name, max_connections=max_connections)
     except AzureException as e:
         # if failed, return -1 to indicate exception
         print(e)
