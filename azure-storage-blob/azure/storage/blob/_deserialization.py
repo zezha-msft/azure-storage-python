@@ -449,3 +449,8 @@ def _parse_account_information(response):
     account_info.account_kind = response.headers['x-ms-account-kind']
 
     return account_info
+
+
+def _parse_continuation_token(response):
+    marker = response.headers.get('x-ms-continuation')
+    return marker if marker is not '' else None

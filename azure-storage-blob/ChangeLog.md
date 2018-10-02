@@ -2,9 +2,10 @@
 
 > See [BreakingChanges](BreakingChanges.md) for a detailed list of API breaks.
 
-## Version 1.x.x:
+## Version XX.XX.XX:
 
 - azure-storage-nspkg is not installed anymore on Python 3 (PEP420-based namespace package)
+- Added support for directory operations: create, rename, and delete.
 
 ## Version 1.3.1:
 - Fixed design flaw where get_blob_to_* methods buffer entire blob when max_connections is set to 1.
